@@ -16,11 +16,12 @@ describe("Execute reentrancy", function () {
     multiSigWallet = await MultiSigWallet.deploy([srs[0].address, srs[1].address, srs[2].address], 2)
     multiSigWallet.deployed()
 
+    /// @dev helper contract performs execution reentrancy attack
     TestsHelper = await ethers.getContractFactory("TestsHelper")
     testsHelper = await TestsHelper.deploy(multiSigWallet.address)
     testsHelper.deployed()
   
-    //contract needs eth for executions
+    /// @dev contract needs eth for executions
     await srs[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther('10')
@@ -28,8 +29,10 @@ describe("Execute reentrancy", function () {
 
     amount = ethers.BigNumber.from('1000000000000000000')
     txn0 = {txId: 0, to: testsHelper.address, amt: amount}
-
-    txn = txn0        // reentrancy test. TestHellper fallback() reenters - txn data required so execute invokes fallback()
+    
+    /// @dev reentrancy test. TestsHelper.sol fallback() reenters
+    /// txn data required so execute invokes TestsHelper's fallback()
+    txn = txn0         
     testsHelper.txIdSetup(txn.txId)
     submitter = srs[0]
     approver = srs[1]
@@ -38,8 +41,10 @@ describe("Execute reentrancy", function () {
     testsHelper.txIdSetup(txn.txId)
   })
 
+
+  // execute function protected from reentrancy by txn's notExecuted state & check
   it("reverts as expected on reentrancy", async function () {
-    txn = txn0  // protected from reentrancy by onlyOwner and notExecuted state & check
+    txn = txn0  
     executor = srs[1]
     revertMessage = "execution failed"
     await expect(multiSigWallet.connect(executor).execute(txn.txId))

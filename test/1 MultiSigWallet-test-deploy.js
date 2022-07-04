@@ -36,8 +36,8 @@ describe("Deploy contract", function () {
   })
 
   
-// fail tests
-  //not enough owners
+  // fail tests
+  // not enough owners
   it("Should fail to deploy. Passing 0 Owners, 0 sigsRequired", async function () {
     await expect(MultiSigWallet.deploy([], 0)).to.revertedWith("min 2 owners required")
   })
@@ -62,7 +62,7 @@ describe("Deploy contract", function () {
     await expect(MultiSigWallet.deploy([srs[0].address], 2)).to.revertedWith("min 2 owners required")
   })
   
-  //sigs required too low
+  // sigs required too low
   it("Should fail to deploy. Passing 2 Owners, 0 sigsRequired", async function () {
     await expect(MultiSigWallet.deploy([srs[0].address, srs[1].address], 0)).to.revertedWith("min 2 sigs required")
   })

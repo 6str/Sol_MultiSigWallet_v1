@@ -15,13 +15,13 @@ describe("Revoke approvals", function () {
     MultiSigWallet = await ethers.getContractFactory("MultiSigWallet")
     multiSigWallet = await MultiSigWallet.deploy([srs[0].address, srs[1].address, srs[2].address], 2)
     multiSigWallet.deployed()
-    
-    //contract needs eth for executions
+
+    /// @dev contract needs eth for executions
     await srs[0].sendTransaction({
       to: multiSigWallet.address,
-      value: ethers.utils.parseEther('2')
+      value: ethers.utils.parseEther('10')
     })
-
+    
     amount = ethers.BigNumber.from('1000000000000000000')
 
     txId = 0
@@ -54,7 +54,6 @@ describe("Revoke approvals", function () {
   })
 
   it("revokes approval", async function () {
-
     revoker = srs[0]
     txId = 0
     await expect(multiSigWallet.connect(revoker).revoke(txId))
@@ -90,7 +89,6 @@ describe("Revoke approvals", function () {
 
 
   it("rejects revoke from non owner", async function () {
-    
     revertMessage = "only owners"
     
     revoker = srs[5]
@@ -106,7 +104,6 @@ describe("Revoke approvals", function () {
 
 
   it("rejects revoke for txId doesn't exist", async function () {
-
     revertMessage = "invalid transaction ID"
 
     revoker = srs[0]
@@ -121,7 +118,6 @@ describe("Revoke approvals", function () {
 
 
   it("rejects revoke for txId not approved", async function () {
-
     revertMessage = "no approval to revoke"
 
     revoker = srs[2]
@@ -137,7 +133,6 @@ describe("Revoke approvals", function () {
 
   
   it("rejects revoke for txId already executed", async function () {
-
     revertMessage = "already executed"
  
     revoker = srs[2]

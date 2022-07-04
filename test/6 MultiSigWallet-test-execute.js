@@ -19,13 +19,14 @@ describe("Execute transactions", function () {
     TestsHelper = await ethers.getContractFactory("TestsHelper")
     testsHelper = await TestsHelper.deploy(multiSigWallet.address)
     testsHelper.deployed()
- 
-    //contract needs eth for executions
+
+    /// @dev contract needs eth for executions
     await srs[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther('10')
     })
-
+ 
+    /// @dev set up transactions: contract state for tests
     amount = ethers.BigNumber.from('1000000000000000000')
     txn0 = {txId: 0, to: srs[0].address, amt: amount}
     txn1 = {txId: 1, to: srs[1].address, amt: amount}
@@ -80,8 +81,8 @@ describe("Execute transactions", function () {
 
 
   it("executes valid executions", async function () {
-    //need to account for txn gas where the executor is also the receiver
 
+    /// @dev where the executor is also the receiver need to account for txn gas when check to address balance
     txn = txn0
     executor = srs[0]
     
@@ -157,7 +158,6 @@ describe("Execute transactions", function () {
 
   
   it("rejects when txId already executed", async function () {
-    
     revertMessage = "already executed"
 
     txn = txn1
@@ -173,7 +173,6 @@ describe("Execute transactions", function () {
 
 
   it("rejects execution by non owner", async function () {
-    
     revertMessage = "only owners"
 
     txn = txn4
@@ -190,7 +189,6 @@ describe("Execute transactions", function () {
 
 
   it("rejects execution for txId doesn't exist", async function () {
-    
     revertMessage = "invalid transaction ID"
 
     txn = txn9
@@ -206,7 +204,6 @@ describe("Execute transactions", function () {
 
 
   it("rejects execution for txId not enough approvals", async function () {
-    
     revertMessage = "not enough approvals"
 
     txn = txn4
@@ -227,7 +224,7 @@ describe("Execute transactions", function () {
     txn = txn6
     executor = srs[1]
         
-    // test transaction fails for some external reason
+    /// @dev tests transaction fails for some external reason
     revertMessage = "execution failed"
     await expect(multiSigWallet.connect(executor).execute(txn.txId))
     .to.be.revertedWith(revertMessage)

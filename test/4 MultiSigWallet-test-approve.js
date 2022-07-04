@@ -15,6 +15,12 @@ describe("Approve transactions", function () {
     multiSigWallet = await MultiSigWallet.deploy([srs[0].address, srs[1].address, srs[2].address], 2)
     multiSigWallet.deployed()
 
+    /// @dev contract needs eth for executions
+    await srs[0].sendTransaction({
+      to: multiSigWallet.address,
+      value: ethers.utils.parseEther('10')
+    })
+
     submitter = srs[0]
     toAddr = srs[1].address
     amount = ethers.BigNumber.from('1000000000000000000')
@@ -97,7 +103,7 @@ describe("Approve transactions", function () {
   })
 
   it("rejects approval for txId already executed", async function () {
-    //send eth to contract first so can do executions
+    /// @dev first send eth to contract to fund executions
     await srs[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther('2')
@@ -106,13 +112,13 @@ describe("Approve transactions", function () {
     revertMessage = "already executed"
     approver = srs[2]
     txId = 0
-    await multiSigWallet.connect(approver).execute(txId)
+    await multiSigWallet.connect(approver).execute(txId)  // execute
     await expect(multiSigWallet.connect(approver).approve(txId))
       .to.be.revertedWith(revertMessage)
     
     approver = srs[1]
     txId = 3
-    await multiSigWallet.connect(approver).execute(txId)
+    await multiSigWallet.connect(approver).execute(txId)  // execute
     await expect(multiSigWallet.connect(approver).approve(txId))
       .to.be.revertedWith(revertMessage)
   })
