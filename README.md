@@ -1,9 +1,10 @@
 # Sol_MultiSigWallet_v1
 a rudimentary multi sig wallet
 
-a basic multi sig wallet implementation that can be quickly written off the top of the head.
-much effort was required to write the uint tests to test the code, and forms the basis for writing the next versions with more features.
+a basic multi sig wallet that can be quickly written off the top of the head.
+much more time and effort went into writing the uint tests, which will be a valuable resource for developing subsequent versions with added features.
 
 contracts developed with hardhat
-unit tests written with chai
-TestsHelper.sol is used to setup a failed transaction unit test to get 100% branch coverage, and a reentrancy test.
+unit tests: chai
+other frameworks: coverage, slither
+TestsHelper.sol: used to setup a failed transaction unit test, and a reentrancy test.
