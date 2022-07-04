@@ -32,7 +32,6 @@ contract TestsHelper {
 
     /// @dev rejects payment to create transaction failure for test
     receive() external payable {
-        // failed transaction test
         revert("receiver rejected transfer");
     }
 

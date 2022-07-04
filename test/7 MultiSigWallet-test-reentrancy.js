@@ -31,7 +31,7 @@ describe("Execute reentrancy", function () {
     txn0 = {txId: 0, to: testsHelper.address, amt: amount}
     
     /// @dev reentrancy test. TestsHelper.sol fallback() reenters
-    /// txn data required so execute invokes TestsHelper's fallback()
+    /// note txn data required so execute invokes TestsHelper's fallback()
     txn = txn0         
     testsHelper.txIdSetup(txn.txId)
     submitter = srs[0]

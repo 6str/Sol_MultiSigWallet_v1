@@ -38,7 +38,8 @@ describe("Execute transactions", function () {
     txn9 = {txId: 9, to: srs[3].address, amt: amount}  // not submitted used for txn not exist tests
     txn10 = {txId: 10, to: srs[3].address, amt: amount} // ditto
 
-    txn = txn0      // valid txn tests
+    // valid txn tests
+    txn = txn0
     submitter = srs[0]
     approver = srs[1]
     multiSigWallet.connect(submitter).submit(txn.to, txn.amt, [])
@@ -62,7 +63,8 @@ describe("Execute transactions", function () {
     multiSigWallet.connect(submitter).submit(txn.to, txn.amt, [0x12])
     multiSigWallet.connect(approver).approve(txn.txId)
 
-    txn = txn4        // not enough approvers tests
+    // not enough approvers tests
+    txn = txn4        
     submitter = srs[1]
     approver = srs[2]
     multiSigWallet.connect(submitter).submit(txn.to, txn.amt, [])
@@ -72,7 +74,8 @@ describe("Execute transactions", function () {
     approver = srs[2]
     multiSigWallet.connect(submitter).submit(txn.to, txn.amt, [0x12])
 
-    txn = txn6        // failed txn test. TestHelper receive() will reject
+    // failed txn test. TestHelper receive() will reject
+    txn = txn6        
     submitter = srs[1]
     approver = srs[2]
     multiSigWallet.connect(submitter).submit(txn.to, txn.amt, [])
