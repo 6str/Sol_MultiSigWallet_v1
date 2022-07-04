@@ -6,4 +6,5 @@ much effort was required to write the uint tests to test the code, and forms the
 
 contracts developed with hardhat
 unit tests written with chai
-TestsHelper.sol is used to setup a failed transaction unit test to get 100% branch coverage, and a reentrancy test.
+other frameworks: coverage, slither
+TestsHelper.sol is used to setup a failed transaction unit test, and a reentrancy test.
