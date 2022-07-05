@@ -4,7 +4,6 @@ pragma solidity ^0.8.7;
 /** 
 *   @title Multi Sig Wallet v1
 *   @notice basic multi sig wallet
-*   @dev used to create a failed transaction unit test, and a reentrancy attack test
 */
 contract MultiSigWallet {
     event Deposit(address indexed by, uint amount);
