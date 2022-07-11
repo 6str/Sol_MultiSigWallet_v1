@@ -70,7 +70,7 @@ contract MultiSigWallet {
         _;
     }
 
-    /// @dev reverts if txn has already been approved
+    /// @dev reverts if txn has already been approved by msg.sender
     modifier notApproved(uint _txId) {
         require(!approved[_txId][msg.sender], "already approved");
         _;
@@ -92,7 +92,7 @@ contract MultiSigWallet {
         emit Deposit(msg.sender, msg.value);
     }
 
-    /// @dev Validates to address not 0. Add txn to transactions array and set approved for submetter's address
+    /// @dev Checks the to address not 0. Adds txn to transactions array and sets approved for submitter's address
     function submit(address _to, uint _amount, bytes calldata _data) external onlyOwner {
         require(_to != address(0), "address 0");
         
