@@ -110,7 +110,7 @@ contract MultiSigWallet {
         emit Approved(msg.sender, _txId);
     }
 
-    /// @dev Sets approved status for valid txn ID mapped to msg.sender's address
+    /// @dev Sets txn approved by msg.sender
     function approve(uint _txId) external onlyOwner txExists(_txId) notApproved(_txId) notExecuted(_txId) {
         approved[_txId][msg.sender] = true;
         emit Approved(msg.sender, _txId);
