@@ -64,7 +64,7 @@ contract MultiSigWallet {
         _;
     }
 
-    /// @dev sequential txn IDs correspond to position in transactions array, so last txID is .length - 1
+    /// @dev sequential txn IDs correspond to position in transactions array, so last txID is always .length - 1
     modifier txExists(uint _txId) {
         require(_txId < transactions.length, "invalid transaction ID");
         _;
