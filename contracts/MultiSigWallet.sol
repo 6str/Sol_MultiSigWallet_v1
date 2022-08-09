@@ -12,7 +12,7 @@ contract MultiSigWallet {
     event Revoked(address indexed by, uint indexed txId);
     event Executed(address indexed by, uint indexed txId);
 
-    /// 
+    // transaction definition
     struct Transaction {
         address to;
         uint amount;
