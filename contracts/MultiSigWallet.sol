@@ -93,6 +93,7 @@ contract MultiSigWallet {
     }
 
     /// @dev Checks the to address not 0. Adds txn to transactions array and sets approved for submitter's address
+    /// @dev submitter's approval implicit
     function submit(address _to, uint _amount, bytes calldata _data) external onlyOwner {
         require(_to != address(0), "address 0");
         
