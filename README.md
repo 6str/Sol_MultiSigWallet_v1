@@ -1,6 +1,3 @@
-# Sol_MultiSigWallet_v1
-a rudimentary multi sig wallet<br>
-
 a basic multi sig wallet that can be quickly written off the top of the head.
 much more time and effort went into writing the uint tests, which will be a valuable resource for developing subsequent versions.<br>
 
